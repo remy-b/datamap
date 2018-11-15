@@ -1,0 +1,26 @@
+<!doctype html>
+{% extends 'main/main_template.html' %}
+{% load static %}
+{% load leaflet_tags %}
+
+{% block head %}
+  {% leaflet_js %}
+  {% leaflet_css %}
+{% endblock %}
+
+{% block content %}
+<script type="text/javascript">
+function map_init_basic (map, options){
+  //map "draw" function
+  {% for sensor in sensor_list_env %}
+    marker = new L.circle([{{sensor.latitude}}, {{sensor.longitude}} ], {
+        color: 'blue',
+        fillColor: 'blue',
+        radius:1000
+      }).addTo(map);
+    marker.bindPopup("Tempeture is {{sensor.data_env.tempeture}}");
+  {% endfor %}
+  }
+</script>
+  {% leaflet_map "DataMap" callback="window.map_init_basic" %}
+{% endblock %}
