@@ -7,8 +7,8 @@ class Sensor(models.Model):
     """Sensor models"""
     token =  models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
     add_date = models.DateTimeField(auto_now_add=True)
-    longitude = models.FloatField()
-    latitude = models.FloatField()
+    longitude = models.FloatField() #xx.xx
+    latitude = models.FloatField() #xx.xx
     altitude = models.FloatField()
 
 class Log(models.Model):
@@ -22,7 +22,7 @@ class Log(models.Model):
 
     def autoid(uuid):
         """create a automatic unique id for the log"""
-        date = datetime.datetime.now()
+        date = datetime.datetime.now() #recup actual date and hours
         date_str = str(date)
         id_auto = str(uuid) + date_str
         return id_auto
@@ -45,7 +45,7 @@ class Log(models.Model):
 
     def data_env_latest(uuid):
         """return the latest environmental data"""
-        env_data = Log.objects.filter(token = uuid).latest('date')
+        env_data = Log.objects.filter(token = uuid).latest('date') #recup the latest entry
         data = {}
         data['tempeture'] = env_data.tempeture
         data['humidity'] = env_data.humidity
